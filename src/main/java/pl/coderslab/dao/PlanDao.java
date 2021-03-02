@@ -18,7 +18,7 @@ public class PlanDao {
     private static final String CREATE_PLAN_QUERY = "INSERT INTO plan(name,description,created,admin_id) VALUES (?,?,?,?,?);";
     private static final String DELETE_PLAN_QUERY = "DELETE FROM plan where id = ?;";
     private static final String UPDATE_PLAN_QUERY = "UPDATE	plan SET name = ? , description = ?, created = ?, admin_id = ? WHERE id = ?;";
-
+    private static final String FIND_NUMBER_OF_PLANS_BY_USER_QUERY ="SELECT COUNT(*) AS NUMBER FROM plan WHERE admin_id = ?";
     //Get plan by id; pobiera informacje z bazy danych i zwraca stworzony obiekt na podstawie podanego id
     public Plan read(Integer planId) {
         Plan plan = new Plan();
@@ -123,6 +123,23 @@ public class PlanDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
+  public int findNumberOfPlansByUser(int admin_id) {
+    int numberOfRecipes = -1;
+    try (Connection connection = DbUtil.getConnection();
+        PreparedStatement statement =
+            connection.prepareStatement(FIND_NUMBER_OF_PLANS_BY_USER_QUERY)) {
+      statement.setInt(1, admin_id);
+      try (ResultSet resultSet = statement.executeQuery()) {
+        while (resultSet.next()) {
+          numberOfRecipes = resultSet.getInt("NUMBER");
+        }
+      }
+      return numberOfRecipes;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return numberOfRecipes;
+        }
 }
