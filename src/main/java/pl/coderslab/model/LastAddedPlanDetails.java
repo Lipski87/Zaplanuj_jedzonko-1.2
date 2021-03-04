@@ -18,12 +18,20 @@ public class LastAddedPlanDetails {
 
   @Override
   public String toString() {
-    return "LastAddedPlanDetails{" +
-            "dayName='" + dayName + '\'' +
-            ", mealName='" + mealName + '\'' +
-            ", recipeName='" + recipeName + '\'' +
-            ", recipeDescription='" + recipeDescription + '\'' +
-            '}';
+    return "LastAddedPlanDetails{"
+        + "dayName='"
+        + dayName
+        + '\''
+        + ", mealName='"
+        + mealName
+        + '\''
+        + ", recipeName='"
+        + recipeName
+        + '\''
+        + ", recipeDescription='"
+        + recipeDescription
+        + '\''
+        + '}';
   }
 
   public String getDayName() {
