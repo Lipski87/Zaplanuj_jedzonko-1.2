@@ -151,8 +151,9 @@ public class PlanDao {
     return numberOfRecipes;
         }
 
-    public LastAddedPlanDetails findLastPlanAdded (int adminId){
+    public ArrayList<String> findLastPlanAdded (int adminId){
         LastAddedPlanDetails lastAddedPlanDetails = new LastAddedPlanDetails();
+        ArrayList<String> arrayList = new ArrayList<>();
         try (Connection connection = DbUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_LAST_ADDED_DETAILS_PLAN_BY_USER_QUERY)
         ) {
@@ -163,12 +164,13 @@ public class PlanDao {
                     lastAddedPlanDetails.setMealName(resultSet.getString("meal_name"));
                     lastAddedPlanDetails.setRecipeName(resultSet.getString("recipe_name"));
                     lastAddedPlanDetails.setRecipeDescription(resultSet.getString("recipe_description"));
+                    arrayList.add(lastAddedPlanDetails.toString());
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return lastAddedPlanDetails;
+        return arrayList;
     }
 
 }
