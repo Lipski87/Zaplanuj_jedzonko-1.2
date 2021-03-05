@@ -22,6 +22,5 @@ public class RecipeListServlet extends HttpServlet {
         List<Recipe> recipeList = recipeDao.findAll();
         request.setAttribute("recipeList", recipeList);
         getServletContext().getRequestDispatcher("/WEB-INF/app-recipes.jsp").forward(request,response);
-    System.out.println(recipeList.toString());
     }
 }
