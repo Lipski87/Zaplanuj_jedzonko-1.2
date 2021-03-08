@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminDao {
 
@@ -14,6 +16,7 @@ public class AdminDao {
     private static final String READ_ADMIN_QUERY = "SELECT * FROM admins WHERE id = ?";
     private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET firstName = ?, lastName = ?, email = ?, password = ? WHERE id = ?";
     private static final String DELETE_ADMIN_QUERY = "DELETE FROM admins WHERE id = ?";
+    private static final String FIND_ALL_ADMINS_QUERY = "SELECT * FROM admins";
 
     public String hashPassword(String password) {
         return org.mindrot.jbcrypt.BCrypt.hashpw(password, org.mindrot.jbcrypt.BCrypt.gensalt());
@@ -36,7 +39,7 @@ public class AdminDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Create user exception");
+            System.out.println("Create admin exception");
         }
 
         return null;
@@ -60,7 +63,7 @@ public class AdminDao {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Read user exception");
+            System.out.println("Read admin exception");
         }
         return admin;
     }
@@ -76,7 +79,7 @@ public class AdminDao {
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Update user exception");
+            System.out.println("Update admin exception");
         }
     }
 
@@ -89,8 +92,32 @@ public class AdminDao {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Delete user exception");
+            System.out.println("Delete admin exception");
         }
     }
 
+    public List<Admin> findAll () {
+        List<Admin> adminsList = new ArrayList<>();
+
+        try (Connection connection = DbUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_ADMINS_QUERY);
+        ResultSet resultSet = preparedStatement.executeQuery()){
+
+            while (resultSet.next()) {
+                Admin admin = new Admin();
+                admin.setId(resultSet.getInt("id"));
+                admin.setFirstName(resultSet.getString("firstName"));
+                admin.setLastName(resultSet.getString("lastName"));
+                admin.setEmail(resultSet.getString("email"));
+                admin.setPassword(resultSet.getString("password"));
+                admin.setSuperadmin(resultSet.getInt("superadmin"));
+                admin.setEnable(resultSet.getInt("enable"));
+                adminsList.add(admin);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Find all admins exception");
+        }
+        return adminsList;
+    }
 }
