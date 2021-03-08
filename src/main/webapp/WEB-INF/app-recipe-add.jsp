@@ -41,13 +41,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/app-recipes.html">
+                <a class="nav-link" href="${pageContext.request.contextPath}/app/recipe/list">
                     <span>Przepisy</span>
                     <i class="fas fa-angle-right"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/app-schedules.html">
+                <a class="nav-link" href="${pageContext.request.contextPath}/app/plan/list">
                     <span>Plany</span>
                     <i class="fas fa-angle-right"></i>
                 </a>
