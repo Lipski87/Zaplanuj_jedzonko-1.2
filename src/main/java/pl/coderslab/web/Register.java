@@ -14,38 +14,45 @@ public class Register extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String firstname = request.getParameter("firstname");
-        String surname = request.getParameter("surname");
+        String lastname = request.getParameter("lastname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String repassword = request.getParameter("repassword");
 
-        AdminDao adminDao = new AdminDao();
-        List<Admin> adminList = adminDao.findAll();
-        boolean uniqueEmail = true;
-
-        for (Admin admin : adminList) {
-            if (admin.getEmail().equals(email)){
-                uniqueEmail = false;
-                break;
-            }
-        }
-        if (uniqueEmail) {
-            Admin newAdmin = new Admin();
-            newAdmin.setFirstName(firstname);
-            newAdmin.setLastName(surname);
-            newAdmin.setEmail(email);
-            newAdmin.setPassword(password);
-            adminDao.create(newAdmin);
-
-            response.sendRedirect(request.getContextPath() + "/login");
+        if (!repassword.equals(password)) {
+            System.out.println("Nieprawidłowo powtórzone hasło");
         } else {
-            System.out.println("Ten email został już użyty do rejestracji. Proszę podać inny.");
-            doGet(request,response);
+            AdminDao adminDao = new AdminDao();
+            List<Admin> adminList = adminDao.findAll();
+            boolean uniqueEmail = true;
+
+            for (Admin admin : adminList) {
+                if (admin.getEmail().equals(email)) {
+                    uniqueEmail = false;
+                    break;
+                }
+            }
+            if (uniqueEmail) {
+
+                Admin newAdmin = new Admin();
+                newAdmin.setFirstName(firstname);
+                newAdmin.setLastName(lastname);
+                newAdmin.setEmail(email);
+                newAdmin.setPassword(password);
+                adminDao.create(newAdmin);
+
+                response.sendRedirect(request.getContextPath() + "/login");
+
+            } else {
+                System.out.println("Ten email został już użyty do rejestracji. Proszę podać inny.");
+                doGet(request, response);
+            }
         }
     }
 }
