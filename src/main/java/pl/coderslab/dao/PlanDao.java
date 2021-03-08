@@ -15,8 +15,8 @@ import java.util.List;
 public class PlanDao {
     //zapytania SQL
     private static final String READ_PLAN_QUERY = "SELECT * from plan where id = ?;";
-    private static final String FIND_ALL_PLANS_QUERY = "SELECT * FROM plan;";
-    private static final String CREATE_PLAN_QUERY = "INSERT INTO plan(name,description,created,admin_id) VALUES (?,?,?,?,?);";
+    private static final String FIND_ALL_PLANS_QUERY = "SELECT * FROM plan ORDER BY created DESC;";
+    private static final String CREATE_PLAN_QUERY = "INSERT INTO plan(name,description,created,admin_id) VALUES (?,?,?,?);";
     private static final String DELETE_PLAN_QUERY = "DELETE FROM plan where id = ?;";
     private static final String UPDATE_PLAN_QUERY = "UPDATE	plan SET name = ? , description = ?, created = ?, admin_id = ? WHERE id = ?;";
     private static final String FIND_NUMBER_OF_PLANS_BY_USER_QUERY ="SELECT COUNT(*) AS NUMBER FROM plan WHERE admin_id = ? ;";
@@ -49,7 +49,7 @@ public class PlanDao {
         return plan;
     }
 
-    //Return all plans; zwraca listę obiektów wszystkich planów
+    //Return all plans; zwraca listę obiektów wszystkich planów, posortowane od najnowszego do najstarszego
     public List<Plan> findAll() {
         List<Plan> planList = new ArrayList<>();
         try (Connection connection = DbUtil.getConnection();
@@ -151,9 +151,9 @@ public class PlanDao {
     return numberOfRecipes;
         }
 
-    public ArrayList<String> findLastPlanAdded (int adminId){
+    public ArrayList<LastAddedPlanDetails> findLastPlanAdded (int adminId){
         LastAddedPlanDetails lastAddedPlanDetails = new LastAddedPlanDetails();
-        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<LastAddedPlanDetails> arrayList = new ArrayList<>();
         try (Connection connection = DbUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_LAST_ADDED_DETAILS_PLAN_BY_USER_QUERY)
         ) {
@@ -164,7 +164,7 @@ public class PlanDao {
                     lastAddedPlanDetails.setMealName(resultSet.getString("meal_name"));
                     lastAddedPlanDetails.setRecipeName(resultSet.getString("recipe_name"));
                     lastAddedPlanDetails.setRecipeDescription(resultSet.getString("recipe_description"));
-                    arrayList.add(lastAddedPlanDetails.toString());
+                    arrayList.add(lastAddedPlanDetails);
                 }
             }
         } catch (Exception e) {

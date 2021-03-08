@@ -35,6 +35,7 @@ public class RecipeDao {
                 while (resultSet.next()) {
                     recipe.setId(resultSet.getInt("id"));
                     recipe.setName(resultSet.getString("name"));
+                    recipe.setIngredients(resultSet.getString("ingredients"));
                     recipe.setDescription(resultSet.getString("description"));
                     recipe.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
                     recipe.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
