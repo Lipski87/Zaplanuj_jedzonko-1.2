@@ -1,7 +1,6 @@
 package pl.coderslab.dao;
 
 import pl.coderslab.model.Admin;
-import pl.coderslab.utils.BCrypt;
 import pl.coderslab.utils.DbUtil;
 
 import java.sql.Connection;
@@ -17,7 +16,7 @@ public class AdminDao {
     private static final String DELETE_ADMIN_QUERY = "DELETE FROM admins WHERE id = ?";
 
     public String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
+        return org.mindrot.jbcrypt.BCrypt.hashpw(password, org.mindrot.jbcrypt.BCrypt.gensalt());
     }
 
     public Admin create(Admin admin) {
