@@ -12,9 +12,9 @@ import java.util.List;
 
 public class AdminDao {
 
-    private static final String CREATE_ADMIN_QUERY = "INSERT INTO admins(firstName, lastName, email, password, superadmin, enable) VALUES (?,?,?,?,0,1)";
+    private static final String CREATE_ADMIN_QUERY = "INSERT INTO admins(first_name, last_name, email, password, superadmin, enable) VALUES (?,?,?,?,0,1)";
     private static final String READ_ADMIN_QUERY = "SELECT * FROM admins WHERE id = ?";
-    private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET firstName = ?, lastName = ?, email = ?, password = ? WHERE id = ?";
+    private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET first_name = ?, last_name = ?, email = ?, password = ? WHERE id = ?";
     private static final String DELETE_ADMIN_QUERY = "DELETE FROM admins WHERE id = ?";
     private static final String FIND_ALL_ADMINS_QUERY = "SELECT * FROM admins";
 
@@ -30,19 +30,21 @@ public class AdminDao {
             preparedStatement.setString(2, admin.getLastName());
             preparedStatement.setString(3, admin.getEmail());
             preparedStatement.setString(4, hashPassword(admin.getPassword()));
+            preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
             if (resultSet.next()) {
                 admin.setId(resultSet.getInt(1));
             }
+
             return admin;
 
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Create admin exception");
+            return null;
         }
-
-        return null;
     }
 
     public Admin read(int adminId) {
@@ -106,8 +108,8 @@ public class AdminDao {
             while (resultSet.next()) {
                 Admin admin = new Admin();
                 admin.setId(resultSet.getInt("id"));
-                admin.setFirstName(resultSet.getString("firstName"));
-                admin.setLastName(resultSet.getString("lastName"));
+                admin.setFirstName(resultSet.getString("first_name"));
+                admin.setLastName(resultSet.getString("last_name"));
                 admin.setEmail(resultSet.getString("email"));
                 admin.setPassword(resultSet.getString("password"));
                 admin.setSuperadmin(resultSet.getInt("superadmin"));
