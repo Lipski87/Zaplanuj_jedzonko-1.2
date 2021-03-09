@@ -24,7 +24,7 @@ public class Login extends HttpServlet {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
+        HttpSession session = request.getSession();
         AdminDao adminDao = new AdminDao();
 
         List<Admin> adminList = adminDao.findAll();
@@ -34,10 +34,14 @@ public class Login extends HttpServlet {
         for (Admin admin : adminList) {
             if (admin.getEmail().equals(email) && BCrypt.checkpw(password, admin.getPassword())) {
                 adminExist = true;
+                adminDao.setAdminEnable(admin.getId());
+                session.setAttribute("adminEnable", admin.getEnable());
+                session.setAttribute("adminId", admin.getId());
             }
         }
         if (adminExist) {
             response.sendRedirect("/contact");
+
         } else {
             System.out.println("Złe dane");
             doGet(request, response);
