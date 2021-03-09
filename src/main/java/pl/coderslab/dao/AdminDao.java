@@ -1,5 +1,6 @@
 package pl.coderslab.dao;
 
+import org.mindrot.jbcrypt.BCrypt;
 import pl.coderslab.model.Admin;
 import pl.coderslab.utils.DbUtil;
 
@@ -12,14 +13,16 @@ import java.util.List;
 
 public class AdminDao {
 
-    private static final String CREATE_ADMIN_QUERY = "INSERT INTO admins(first_name, last_name, email, password, superadmin, enable) VALUES (?,?,?,?,0,1)";
-    private static final String READ_ADMIN_QUERY = "SELECT * FROM admins WHERE id = ?";
-    private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET first_name = ?, last_name = ?, email = ?, password = ? WHERE id = ?";
-    private static final String DELETE_ADMIN_QUERY = "DELETE FROM admins WHERE id = ?";
-    private static final String FIND_ALL_ADMINS_QUERY = "SELECT * FROM admins";
+    private static final String CREATE_ADMIN_QUERY = "INSERT INTO admins(first_name,last_name, email, password, superadmin, enable) VALUES (?,?,?,?,0,0);";
+    private static final String READ_ADMIN_QUERY = "SELECT * FROM admins WHERE id = ?;";
+    private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET first_name = ?, last_name = ?, email = ?, password = ? WHERE id = ?;";
+    private static final String DELETE_ADMIN_QUERY = "DELETE FROM admins WHERE id = ?;";
+    private static final String FIND_ALL_ADMINS_QUERY = "SELECT * FROM admins;";
+    private static final String SET_ADMIN_ENABLE_QUERY = "UPDATE admins set enable = 1 where admins.id = ?;";
+    private static final String SET_ADMIN_DISABLE_QUERY = "UPDATE admins set enable = 0 where admins.id = ?;";
 
     public String hashPassword(String password) {
-        return org.mindrot.jbcrypt.BCrypt.hashpw(password, org.mindrot.jbcrypt.BCrypt.gensalt());
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public Admin create(Admin admin) {
@@ -100,7 +103,6 @@ public class AdminDao {
 
     public List<Admin> findAll () {
         List<Admin> adminsList = new ArrayList<>();
-
         try (Connection connection = DbUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_ADMINS_QUERY);
         ResultSet resultSet = preparedStatement.executeQuery()){
@@ -121,5 +123,29 @@ public class AdminDao {
             System.out.println("Find all admins exception");
         }
         return adminsList;
+    }
+
+    public void setAdminEnable (int adminId) {
+        try (Connection connection = DbUtil.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(SET_ADMIN_ENABLE_QUERY);
+            preparedStatement.setInt(1,adminId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Set admin enable exception");
+        }
+    }
+
+    public void setAdminDisable (int adminId) {
+        try (Connection connection = DbUtil.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SET_ADMIN_DISABLE_QUERY);
+            preparedStatement.setInt(1, adminId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Set admin disable exception");
+        }
     }
 }
