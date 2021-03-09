@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +11,7 @@
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Charmonman:400,700|Open+Sans:400,600,700&amp;subset=latin-ext"
         rel="stylesheet">
-    <link rel="stylesheet" href="./css/style.css">
+    <link href='<c:url value="/css/style.css"/>' rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 
@@ -72,10 +74,10 @@
                 <div class="dashboard-content border-dashed p-3 m-4 view-height">
                     <!-- fix action, method -->
                     <!-- add name attribute for all inputs -->
-                    <form>
+                    <form action='<c:url value="/app/plan/edit"/>' method="post">
                     <div class="row border-bottom border-3 p-1 m-1">
                         <div class="col noPadding">
-                            <h3 class="color-header text-uppercase">NOWY PLAN</h3>
+                            <h3 class="color-header text-uppercase">EDYCJA PLANU</h3>
                         </div>
                         <div class="col d-flex justify-content-end mb-2">
                             <button type="submit" class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">Zapisz</button>
@@ -89,7 +91,7 @@
                                     Nazwa planu
                                 </label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" value="Plan jarski na bezmięsny tydzień" id="planName" placeholder="Nazwa planu">
+                                    <input class="form-control" value="${plan.name}" id="planName" name="planName" placeholder="Nazwa planu">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -97,13 +99,14 @@
                                     Opis planu
                                 </label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" rows="5" id="planDescription" placeholder="Opis plany">
-Pojęcie kuchnia wegetariańska określa pożywienie, które ani nie zawiera mięsa, ani nie zostało przygotowane na bazie pochodzącej z mięsa (np. na rosole drobiowym). Laktoowowegetarianie (najczęściej spotykany typ wegetarian w zachodnim świecie) spożywają nabiał, laktowegetarianie wykluczają jaja, ale nie inne produkty nabiałowe.
+                                    <textarea class="form-control" rows="5" id="planDescription" name="planDescription" placeholder="Opis plany">
+                                    ${plan.description}
                                     </textarea>
                                 </div>
                             </div>
 
                     </div>
+                        <input type="hidden" id="planId" name="planId" value="${plan.id}">
                     </form>
                 </div>
             </div>

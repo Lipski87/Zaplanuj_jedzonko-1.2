@@ -125,7 +125,7 @@ public class PlanDao {
             statement.setString(1, plan.getName());
             statement.setString(2, plan.getDescription());
             statement.setString(3, plan.getCreated());
-            statement.setInt(3, plan.getAdminId());
+            statement.setInt(4, plan.getAdminId());
 
             statement.executeUpdate();
         } catch (Exception e) {
