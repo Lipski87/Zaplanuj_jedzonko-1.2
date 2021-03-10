@@ -18,25 +18,35 @@
 </head>
 
 <body>
-<%@include file="fragments/header.jsp"%>
+<header class="page-header">
+    <nav class="navbar navbar-expand-lg justify-content-between">
+        <a href="/" class="navbar-brand main-logo main-logo-smaller">
+            Zaplanuj <span>Jedzonko</span>
+        </a>
+        <div class="d-flex justify-content-around">
+            <h4 class="text-light mr-3">Imię</h4>
+            <div class="circle-div text-center"><i class="fas fa-user icon-user"></i></div>
+        </div>
+    </nav>
+</header>
 
 <section class="dashboard-section">
     <div class="row dashboard-nowrap">
         <ul class="nav flex-column long-bg">
             <li class="nav-item">
-                <a class="nav-link" href="/dashboard.html">
+                <a class="nav-link" href='<c:url value="/dashboard"/>'>
                     <span>Pulpit</span>
                     <i class="fas fa-angle-right"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/app-recipes.html">
+                <a class="nav-link" href='<c:url value="/app/recipe/list"/>'>
                     <span>Przepisy</span>
                     <i class="fas fa-angle-right"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/app-schedules.html">
+                <a class="nav-link" href='<c:url value="/app/plan/list"/>'>
                     <span>Plany</span>
                     <i class="fas fa-angle-right"></i>
                 </a>
@@ -102,7 +112,6 @@
     </div>
 </section>
 
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -112,5 +121,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+
+<%@include file="fragments/footer.jsp"%>
 </body>
 </html>
