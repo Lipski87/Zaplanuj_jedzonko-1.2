@@ -19,7 +19,7 @@
 <body>
 <header class="page-header">
     <nav class="navbar navbar-expand-lg justify-content-between">
-        <a href="/" class="navbar-brand main-logo main-logo-smaller">
+        <a href="${pageContext.request.contextPath}/" class="navbar-brand main-logo main-logo-smaller">
             Zaplanuj <span>Jedzonko</span>
         </a>
         <div class="d-flex justify-content-around">
@@ -33,7 +33,7 @@
     <div class="row dashboard-nowrap">
         <ul class="nav flex-column long-bg">
             <li class="nav-item">
-                <a class="nav-link" href="/dashboard.html">
+                <a class="nav-link" href="${pageContext.request.contextPath}/dashboard">
                     <span>Pulpit</span>
                     <i class="fas fa-angle-right"></i>
                 </a>
@@ -89,6 +89,7 @@
                     </tr>
                     </thead>
                     <tbody class="text-color-lighter">
+                    ${empty msg ? "" : msg}
                     <c:forEach items="${recipeList}" var="recipe" varStatus="LoopStatus">
                         <tr class="d-flex">
                             <th scope="row" class="col-1">${LoopStatus.count}</th>
@@ -97,9 +98,9 @@
                             </td>
                             <td class="col-7">${recipe.description}</td>
                             <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
-                                <a href="#" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
+                                <a href="${pageContext.request.contextPath}/app/recipe/delete?id=${recipe.id}" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
                                 <a href="${pageContext.request.contextPath}/app/recipe/details?id=${recipe.id}" class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
-                                <a href="/app-edit-recipe.html"
+                                <a href="${pageContext.request.contextPath}/app/recipe/edit?id=${recipe.id}"
                                    class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
                             </td>
                         </tr>
