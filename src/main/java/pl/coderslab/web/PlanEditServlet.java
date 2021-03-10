@@ -5,6 +5,7 @@ import pl.coderslab.model.Plan;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,27 +14,29 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-@WebServlet(name = "PlanAddServlet", value = "/app/plan/add")
-public class PlanAddServlet extends HttpServlet {
+@WebServlet(name = "PlanEditServlet", value = "/app/plan/edit")
+public class PlanEditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String planName = request.getParameter("name");
-        String planDescription = request.getParameter("description");
+        int planId = Integer.parseInt(request.getParameter("planId"));
+        String planName = request.getParameter("planName");
+        String planDescription = request.getParameter("planDescription");
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         int adminId = (Integer) session.getAttribute("adminId");
 
-        Plan plan = new Plan();
-        plan.setName(planName);
-        plan.setDescription(planDescription);
-        plan.setCreated(timeStamp);
-        plan.setAdminId(adminId);
+        Plan editedPlan = new Plan(planId, planName, planDescription, timeStamp, adminId);
         PlanDao planDao = new PlanDao();
-        planDao.create(plan);
+        planDao.update(editedPlan);
 
         response.sendRedirect("/app/plan/list");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/app-add-schedules.jsp").forward(request, response);
+        PlanDao planDao = new PlanDao();
+        int planId = Integer.parseInt(request.getParameter("id"));
+        Plan plan = planDao.read(planId);
+        request.setAttribute("plan", plan);
+
+        getServletContext().getRequestDispatcher("/WEB-INF/app-edit-schedules.jsp").forward(request, response);
     }
 }
