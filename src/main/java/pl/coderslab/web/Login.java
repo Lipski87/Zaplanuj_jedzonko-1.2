@@ -40,7 +40,7 @@ public class Login extends HttpServlet {
             }
         }
         if (adminExist) {
-            response.sendRedirect("/contact");
+            response.sendRedirect("/dashboard");
 
         } else {
             System.out.println("Złe dane");
