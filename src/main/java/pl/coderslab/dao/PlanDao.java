@@ -20,12 +20,10 @@ public class PlanDao {
     private static final String DELETE_PLAN_QUERY = "DELETE FROM plan where id = ?;";
     private static final String UPDATE_PLAN_QUERY = "UPDATE	plan SET name = ? , description = ?, created = ?, admin_id = ? WHERE id = ?;";
     private static final String FIND_NUMBER_OF_PLANS_BY_USER_QUERY ="SELECT COUNT(*) AS NUMBER FROM plan WHERE admin_id = ? ;";
-    private static final String FIND_LAST_ADDED_DETAILS_PLAN_BY_USER_QUERY =
-      "SELECT day_name.name as day_name, meal_name,  recipe.name as recipe_name, recipe.description as recipe_description\n"
-          + "FROM `recipe_plan`\n"
-          + "         JOIN day_name on day_name.id=day_name_id\n"
-          + "         JOIN recipe on recipe.id=recipe_id WHERE\n"
-          + "        recipe_plan.plan_id =  (SELECT MAX(id) from plan WHERE admin_id = ?)\n"
+  private static final String FIND_LAST_ADDED_DETAILS_PLAN_BY_USER_QUERY =
+      "SELECT day_name.name as day_name, meal_name, recipe.name as recipe_name, recipe.description as recipe_description, plan.name as plan_name\n"
+          + "FROM `recipe_plan` JOIN day_name on day_name.id = day_name_id JOIN recipe on recipe.id = recipe_id Join plan on plan.id = plan_id\n"
+          + "WHERE recipe_plan.plan_id = (SELECT MAX(id) from plan WHERE admin_id = ?)\n"
           + "ORDER by day_name.display_order, recipe_plan.display_order;";
     //Get plan by id; pobiera informacje z bazy danych i zwraca stworzony obiekt na podstawie podanego id
     public Plan read(Integer planId) {
@@ -152,18 +150,20 @@ public class PlanDao {
         }
 
     public ArrayList<LastAddedPlanDetails> findLastPlanAdded (int adminId){
-        LastAddedPlanDetails lastAddedPlanDetails = new LastAddedPlanDetails();
         ArrayList<LastAddedPlanDetails> arrayList = new ArrayList<>();
         try (Connection connection = DbUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_LAST_ADDED_DETAILS_PLAN_BY_USER_QUERY)
         ) {
             statement.setInt(1, adminId);
             try (ResultSet resultSet = statement.executeQuery()) {
+                int start = 0;
                 while (resultSet.next()) {
+                    LastAddedPlanDetails lastAddedPlanDetails = new LastAddedPlanDetails();
                     lastAddedPlanDetails.setDayName(resultSet.getString("day_name"));
                     lastAddedPlanDetails.setMealName(resultSet.getString("meal_name"));
                     lastAddedPlanDetails.setRecipeName(resultSet.getString("recipe_name"));
                     lastAddedPlanDetails.setRecipeDescription(resultSet.getString("recipe_description"));
+                    lastAddedPlanDetails.setPlanName(resultSet.getString("plan_name"));
                     arrayList.add(lastAddedPlanDetails);
                 }
             }
