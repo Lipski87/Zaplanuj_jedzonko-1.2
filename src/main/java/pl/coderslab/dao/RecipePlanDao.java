@@ -15,6 +15,8 @@ public class RecipePlanDao {
     private static final String CREATE_RECIPE_PLAN_QUERY = "INSERT INTO recipe_plan(recipe_id, meal_name, display_order, day_name_id, plan_id) VALUES (?,?,?,?,?);";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM recipe LEFT JOIN recipe_plan rp on recipe.id = rp.recipe_id WHERE plan_id=? ORDER BY display_order ASC;";
     private static final String DELETE_RECIPE_PLAN_QUERY = "DELETE FROM recipe_plan where plan_id = ?;";
+    private static final String FIND_BY_RECIPE_ID_QUERY = "SELECT * FROM recipe LEFT JOIN recipe_plan rp on recipe.id = rp.recipe_id WHERE recipe_id=? ORDER BY display_order ASC;";
+
 
     public void create(int planId, String mealName, int displayOrder, int recipeiD, int dayNameId) {
         try (Connection connection = DbUtil.getConnection();
@@ -58,6 +60,31 @@ public class RecipePlanDao {
         }
         return DayNameList;
     }
+    public List<RecipePlan> findByRecipeId(int recipeId) {
+        List<RecipePlan> planRecipeList = new ArrayList<>();
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_RECIPE_ID_QUERY);) {
+
+            statement.setInt(1, recipeId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                RecipePlan RecipePlanAdd = new RecipePlan();
+                RecipePlanAdd.setId(resultSet.getInt("id"));
+                RecipePlanAdd.setMealName(resultSet.getString("meal_name"));
+                RecipePlanAdd.setDisplay_order(resultSet.getInt("display_order"));
+                RecipePlanAdd.setDay_name_id(resultSet.getInt("day_name_id"));
+                RecipePlanAdd.setPlanId(resultSet.getInt("plan_id"));
+                RecipePlanAdd.setRecipeId(resultSet.getInt("recipe_id"));
+                RecipePlanAdd.setRecipeDescri(resultSet.getString("description"));
+                planRecipeList.add(RecipePlanAdd);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return planRecipeList;
+    }
+
 
     public void delete(Integer planId) {
         try (Connection connection = DbUtil.getConnection();
@@ -75,3 +102,6 @@ public class RecipePlanDao {
     }
 
 }
+
+
+
