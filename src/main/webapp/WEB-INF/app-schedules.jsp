@@ -30,19 +30,19 @@
         <div class="row dashboard-nowrap">
                 <ul class="nav flex-column long-bg">
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard.html">
+                            <a class="nav-link" href='<c:url value="/dashboard"/>'>
                                 <span>Pulpit</span>
                                 <i class="fas fa-angle-right"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/app-recipes.html">
-                                <span>Przepisy</span>
-                                <i class="fas fa-angle-right"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/app-schedules.html">
+                    <li class="nav-item">
+                        <a class="nav-link" href='<c:url value="/app/recipe/list"/>'>
+                            <span>Przepisy</span>
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<c:url value="/app/plan/list"/>'>
                                 <span>Plany</span>
                                 <i class="fas fa-angle-right"></i>
                             </a>
@@ -94,7 +94,7 @@
                                         <td class="col-1">${LoopStatus.count}</td>
                                         <td class="col-2">${plan.name}</td>
                                         <td class="col-7">${plan.description}</td>
-                                        <td class="col-2 d-flex align-items-center justify-content-center flex-wrap"><a href="#" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
+                                        <td class="col-2 d-flex align-items-center justify-content-center flex-wrap"><a href='<c:url value="/app/plan/delete?id=${plan.id}"/>' class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
                                             <a href='<c:url value="/app/plan/details/?id=${plan.id}"/>' class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
                                             <a href='<c:url value="/app/plan/edit?id=${plan.id}"/>' class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
                                         </td>
@@ -115,5 +115,6 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <%@include file="fragments/footer.jsp"%>
 </body>
 </html>

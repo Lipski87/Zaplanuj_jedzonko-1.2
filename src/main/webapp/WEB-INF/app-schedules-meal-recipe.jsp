@@ -31,19 +31,19 @@
         <div class="row dashboard-nowrap">
                 <ul class="nav flex-column long-bg">
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard.html">
+                            <a class="nav-link" href='<c:url value="/dashboard"/>'>
                                 <span>Pulpit</span>
                                 <i class="fas fa-angle-right"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/app-recipes.html">
-                                <span>Przepisy</span>
-                                <i class="fas fa-angle-right"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/app/plan/list">
+                    <li class="nav-item">
+                        <a class="nav-link" href='<c:url value="/app/recipe/list"/>'>
+                            <span>Przepisy</span>
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<c:url value="/app/plan/list"/>'>
                                 <span>Plany</span>
                                 <i class="fas fa-angle-right"></i>
                             </a>
@@ -148,5 +148,6 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <%@include file="fragments/footer.jsp"%>
 </body>
 </html>
