@@ -22,9 +22,9 @@ public class RecipeDeleteServlet extends HttpServlet {
             throws ServletException, IOException {
         Integer recipeId = Integer.valueOf(request.getParameter("id"));
         Boolean isRecipeInPlan = false;
-        // usuniecie z bazy danych jesli nie nalezy do planu
         RecipeDao recipeDao = new RecipeDao();
         RecipePlanDao recipePlanDao = new RecipePlanDao();
+
         List<RecipePlan> byRecipeId = recipePlanDao.findByRecipeId(recipeId);
         for (int i = 0; i < byRecipeId.size(); i++) {
             if (byRecipeId.get(i).getRecipeId() == recipeId) {
@@ -32,15 +32,20 @@ public class RecipeDeleteServlet extends HttpServlet {
             }
         }
         if (isRecipeInPlan) {
-            String msg = "Cannot delete recipe - Existing Plan/Plans with this recipe";
+            String msg = "Nie można usunąć przepisu - jest zawarty w planie/planach";
             request.setAttribute("msg", msg);
             request.removeAttribute("id");
             getServletContext()
                     .getRequestDispatcher("/app/recipe/list")
                     .forward(request, response);
         } else {
-            recipeDao.delete(Integer.valueOf(recipeId));
-            response.sendRedirect("list");
+            //recipeDao.delete(Integer.valueOf(recipeId));
+            request.setAttribute("id",recipeId.toString());
+            String msg = "Czy chcesz usunąć wskazany przepis? Operacja jest nie odwracalna!";
+            request.setAttribute("msg", msg);
+            getServletContext()
+                    .getRequestDispatcher("/WEB-INF/app-delete-confirm.jsp")
+                    .forward(request, response);
         }
     }
 }
