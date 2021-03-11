@@ -17,23 +17,12 @@
 </head>
 
 <body>
-<header class="page-header">
-    <nav class="navbar navbar-expand-lg justify-content-between">
-        <a href="${pageContext.request.contextPath}/" class="navbar-brand main-logo main-logo-smaller">
-            Zaplanuj <span>Jedzonko</span>
-        </a>
-        <div class="d-flex justify-content-around">
-            <h4 class="text-light mr-3">Imię</h4>
-            <div class="circle-div text-center"><i class="fas fa-user icon-user"></i></div>
-        </div>
-    </nav>
-</header>
-
+<%@include file="fragments/dashboardHeader.jsp"%>
 <section class="dashboard-section">
     <div class="row dashboard-nowrap">
         <ul class="nav flex-column long-bg">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/dashboard">
+                <a class="nav-link" href="${pageContext.request.contextPath}/app/dashboard">
                     <span>Pulpit</span>
                     <i class="fas fa-angle-right"></i>
                 </a>
@@ -51,20 +40,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/app-edit-user-data.html">
+                <a class="nav-link" href='<c:url value="/app/edit-user"/>'>
                     <span>Edytuj dane</span>
-                    <i class="fas fa-angle-right"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="/app-edit-password.html">
-                    <span>Zmień hasło</span>
-                    <i class="fas fa-angle-right"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/super-admin-users.html">
-                    <span>Użytkownicy</span>
                     <i class="fas fa-angle-right"></i>
                 </a>
             </li>
@@ -103,7 +80,7 @@
                                    class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
                                 <a href="${pageContext.request.contextPath}/app/recipe/details?id=${recipe.id}"
                                    class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
-                                <a href="${pageContext.request.contextPath}/app/recipe/edit?id=${recipe.id}"
+                                <a href="<c:url value="/app/recipe/edit?id=${recipe.id}"/>">
                                    class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
                             </td>
                         </tr>
