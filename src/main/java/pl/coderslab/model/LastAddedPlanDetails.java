@@ -5,15 +5,21 @@ public class LastAddedPlanDetails {
   private String mealName;
   private String recipeName;
   private String recipeDescription;
+  private String planName;
 
   public LastAddedPlanDetails() {}
 
   public LastAddedPlanDetails(
-      String dayName, String mealName, String recipeName, String recipeDescription) {
+      String dayName,
+      String mealName,
+      String recipeName,
+      String recipeDescription,
+      String planName) {
     this.dayName = dayName;
     this.mealName = mealName;
     this.recipeName = recipeName;
     this.recipeDescription = recipeDescription;
+    this.planName = planName;
   }
 
   @Override
@@ -30,6 +36,9 @@ public class LastAddedPlanDetails {
         + '\''
         + ", recipeDescription='"
         + recipeDescription
+        + '\''
+        + ", planName='"
+        + planName
         + '\''
         + '}';
   }
@@ -64,5 +73,13 @@ public class LastAddedPlanDetails {
 
   public void setRecipeDescription(String recipeDescription) {
     this.recipeDescription = recipeDescription;
+  }
+
+  public String getPlanName() {
+    return planName;
+  }
+
+  public void setPlanName(String planName) {
+    this.planName = planName;
   }
 }
