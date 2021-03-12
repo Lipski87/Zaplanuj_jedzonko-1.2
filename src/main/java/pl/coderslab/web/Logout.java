@@ -16,7 +16,7 @@ public class Logout extends HttpServlet {
         AdminDao adminDao = new AdminDao();
         adminDao.setAdminDisable((Integer) session.getAttribute("adminId"));
         session.invalidate();
-        getServletContext().getRequestDispatcher("/").forward(request,response);
+        getServletContext().getRequestDispatcher("/login").forward(request,response);
     }
 
     @Override

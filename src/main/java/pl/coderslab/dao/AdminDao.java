@@ -15,7 +15,7 @@ public class AdminDao {
 
     private static final String CREATE_ADMIN_QUERY = "INSERT INTO admins(first_name,last_name, email, password, superadmin, enable) VALUES (?,?,?,?,0,0);";
     private static final String READ_ADMIN_QUERY = "SELECT * FROM admins WHERE id = ?;";
-    private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET first_name = ?, last_name = ?, email = ?, password = ? WHERE id = ?;";
+    private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET first_name = ?, last_name = ?, email = ? WHERE id = ?;";
     private static final String DELETE_ADMIN_QUERY = "DELETE FROM admins WHERE id = ?;";
     private static final String FIND_ALL_ADMINS_QUERY = "SELECT * FROM admins;";
     private static final String SET_ADMIN_ENABLE_QUERY = "UPDATE admins set enable = 1 where admins.id = ?;";
@@ -58,8 +58,8 @@ public class AdminDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     admin.setId(resultSet.getInt("id"));
-                    admin.setFirstName(resultSet.getString("firstName"));
-                    admin.setLastName(resultSet.getString("lastName"));
+                    admin.setFirstName(resultSet.getString("first_name"));
+                    admin.setLastName(resultSet.getString("last_name"));
                     admin.setEmail(resultSet.getString("email"));
                     admin.setPassword(hashPassword(resultSet.getString("password")));
                     admin.setSuperadmin(resultSet.getInt("superadmin"));
@@ -80,7 +80,6 @@ public class AdminDao {
             preparedStatement.setString(1, admin.getFirstName());
             preparedStatement.setString(2, admin.getLastName());
             preparedStatement.setString(3, admin.getEmail());
-            preparedStatement.setString(4, this.hashPassword(admin.getPassword()));
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

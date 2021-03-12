@@ -9,7 +9,15 @@ import java.io.IOException;
 public class Contact extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/contact.jsp").forward(request,response);
+        try {
+            HttpSession httpSession = request.getSession();
+            int enable = (int) httpSession.getAttribute("adminEnable");
+            httpSession.setAttribute("isEnable",enable);
+            getServletContext().getRequestDispatcher("/WEB-INF/contact.jsp").forward(request,response);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            getServletContext().getRequestDispatcher("/WEB-INF/contact.jsp").forward(request,response);
+        }
     }
 
     @Override
