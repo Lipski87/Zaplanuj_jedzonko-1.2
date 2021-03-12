@@ -80,7 +80,7 @@
                                    class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
                                 <a href="${pageContext.request.contextPath}/app/recipe/details?id=${recipe.id}"
                                    class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
-                                <a href="<c:url value="/app/recipe/edit?id=${recipe.id}"/>">
+                                <a href="<c:url value="/app/recipe/edit?id=${recipe.id}"/>"
                                    class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
                             </td>
                         </tr>
@@ -104,5 +104,4 @@
         crossorigin="anonymous"></script>
 
 </body>
-<script src="deleteRecipeOkCancel.js"></script>
 </html>
