@@ -25,15 +25,22 @@ public class Dashboard extends HttpServlet {
         PlanDao planDao = new PlanDao();
         request.setAttribute("plansNumber", planDao.findNumberOfPlansByUser(adminId));
 
-            ArrayList<LastAddedPlanDetails> plan = planDao.findLastPlanAdded(adminId);
+        List<List<String>> plan = planDao.findLastAddedPlan(adminId);
 
-            if (plan.isEmpty()) {
-                String msg = "Użytkownik nie dodał jeszcze żadnego planu";
-                request.setAttribute("planNameMsg", msg);
-            } else {
-                String lastPlan = plan.get(0).toString();
-                request.setAttribute("planName", lastPlan);
+        if (plan.isEmpty()) {
+            String msg = "Użytkownik nie dodał jeszcze żadnego planu";
+            request.setAttribute("planNameMsg", msg);
+        } else {
+            List<Plan> all = planDao.findAllByAdmin(adminId);
+            for (int i = 0; i < all.size(); i++) {
+                if (i == all.size() - 1) {
+                    String name = all.get(i).getName();
+                    request.setAttribute("lastPlanName", name);
+                }
             }
+            List<List<String>> lastPlan = planDao.findLastAddedPlan(adminId);
+            request.setAttribute("lastPlanList", lastPlan);
+        }
 
         getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
     }

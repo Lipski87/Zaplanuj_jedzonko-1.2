@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -29,7 +30,9 @@ public class RecipeAddServlet extends HttpServlet {
       String name = request.getParameter("name");
       String description = request.getParameter("description");
       int preparationTime = Integer.parseInt(request.getParameter("preparation_time"));
-      // Todo add validation of preparation time
+
+      HttpSession httpSession = request.getSession();
+
       String preparation = request.getParameter("preparation");
       String ingredients = request.getParameter("ingredients");
       RecipeDao recipeDao = new RecipeDao();
@@ -42,7 +45,8 @@ public class RecipeAddServlet extends HttpServlet {
               LocalDateTime.now(),
               preparationTime,
               preparation,
-              1);
+                  (Integer) httpSession.getAttribute("adminId"));
+
       // Todo AdminID take from cookie? or session? set as 1 for now
       recipeDao.create(recipe);
 

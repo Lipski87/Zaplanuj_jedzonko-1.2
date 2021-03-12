@@ -87,32 +87,30 @@
             </div>
             </c:when>
             <c:otherwise>
-            <div class="m-4 p-4 border-dashed">
-                <h2 class="dashboard-content-title">
-                    <span>Ostatnio dodany plan:</span> ${lastPlan}
-                </h2>
-                <c:forEach items="${plan}" var="item">
-                <table class="table">
-                    <thead>
-                    <tr class="d-flex">
-                        <th class="col-2">${plan[0]}</th>
-                        <th class="col-8"></th>
-                        <th class="col-2"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="d-flex">
-                        <td class="col-2">${plan[1]}</td>
-                        <td class="col-8">${plan[2]}</td>
-                        <td class="col-2"><button type="button" class="btn btn-primary rounded-0">
-                            <a href="<c:url value="/app/recipe/details"/>">Szczegóły</a>
-                        </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                </c:forEach>
-            </div>
+                <div class="m-4 p-4 border-dashed">
+                    <h2 class="dashboard-content-title">
+                        <span>Ostatnio dodany plan: ${lastPlanName}</span>
+                    </h2>
+                    <c:forEach items="${lastPlanList}" var="item">
+                        <table class="table">
+                            <thead>
+                            <tr class="d-flex">
+                                <th class="col-2"> ${item[0]} </th>
+                                <th class="col-8"></th>
+                                <th class="col-2"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="d-flex">
+                                <td class="col-2"> ${item[1]} </td>
+                                <td class="col-8"> ${item[2]} </td>
+                                <td class="col-2">
+                                    <a href="<c:url value="/app/recipe/details"><c:param name="recipeId" value="${item[3]}"/></c:url>"  class="btn btn-info rounded-0 text-light m-1">Szczegóły</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </c:forEach>
+                </div>
             </c:otherwise>
             </c:choose>
         </div>
