@@ -16,12 +16,17 @@ public class AccessFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpSession session = httpServletRequest.getSession();
 
-        if(session.getAttribute("adminEnable").equals(0)){
+        try {
+            if(session.getAttribute("adminEnable").equals(0)){
+                ((HttpServletResponse) response).sendRedirect("/login");
+                System.out.println("Brak autoryzacji użytkownika");
+            } else {
+                chain.doFilter(request, response);
+                System.out.println("Filtr dostępowy działa!");
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
             ((HttpServletResponse) response).sendRedirect("/login");
-            System.out.println("Brak autoryzacji użytkownika");
-        } else {
-            chain.doFilter(request, response);
-            System.out.println("Filtr dostępowy działa!");
         }
     }
     public void destroy() {

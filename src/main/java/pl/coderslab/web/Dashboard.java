@@ -34,7 +34,6 @@ public class Dashboard extends HttpServlet {
         }
         List<List<String>> lastPlan = planDao.findLastAddedPlan(adminId);
         request.setAttribute("lastPlanList", lastPlan);
-        System.out.println(lastPlan);
 
         getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
     }

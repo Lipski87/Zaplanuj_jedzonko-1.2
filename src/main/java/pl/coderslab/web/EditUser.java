@@ -27,7 +27,8 @@ public class EditUser extends HttpServlet {
         String lastname = request.getParameter("lastname");
         String email = request.getParameter("email");
 
-        int adminId = (int) request.getAttribute("adminId");
+        HttpSession httpSession = request.getSession();
+        int adminId = (int) httpSession.getAttribute("adminId");
 
         if (!firstname.equals("") && !lastname.equals("") && !email.equals("")){
             Admin admin = new Admin();
@@ -38,6 +39,7 @@ public class EditUser extends HttpServlet {
 
             AdminDao adminDao = new AdminDao();
             adminDao.update(admin);
+
         }
 
         response.sendRedirect("/app/edit-user");

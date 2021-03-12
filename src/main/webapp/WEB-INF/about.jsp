@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: maciej
-  Date: 02.03.2021
-  Time: 12:46
-  To change this template use File | Settings | File Templates.
---%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,7 +13,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
-<%@include file="fragments/header.jsp"%>
+<c:choose>
+    <c:when test="${isEnable == 1}">
+        <%@include file="fragments/dashboardHeader.jsp"%>
+    </c:when>
+    <c:otherwise>
+        <%@include file="fragments/header.jsp"%>
+    </c:otherwise>
+</c:choose>
 <div class="col">
     <br>
     <h3 class="mb-4">Lorem ipsum dolor</h3>

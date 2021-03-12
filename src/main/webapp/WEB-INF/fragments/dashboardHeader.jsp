@@ -11,6 +11,10 @@
             Zaplanuj <span>Jedzonko</span>
         </a>
         <ul class="nav nounderline text-uppercase">
+            <li class="nav-item ml-4">
+                <a class="nav-link disabled" href="<c:url value="/app/dashboard"/>">Pulpit</a>
+            </li>
+            <li class="nav-item ml-4">
                 <a class="nav-link" href="<c:url value="/about"/>">o aplikacji</a>
             </li>
             <li class="nav-item ml-4">

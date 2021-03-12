@@ -30,12 +30,6 @@
                             <i class="fas fa-angle-right"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href='<c:url value="/app/plan/list"/>'>
-                                <span>Plany</span>
-                                <i class="fas fa-angle-right"></i>
-                            </a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href='<c:url value="/app/edit-user"/>'>
                                 <span>Edytuj dane</span>

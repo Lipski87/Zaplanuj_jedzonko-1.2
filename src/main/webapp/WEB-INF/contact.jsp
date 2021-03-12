@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: maciej
-  Date: 02.03.2021
-  Time: 12:55
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -21,7 +15,14 @@
     </head>
 </head>
 <body>
-<%@include file="fragments/header.jsp"%>
+<c:choose>
+    <c:when test="${isEnable == 1}">
+        <%@include file="fragments/dashboardHeader.jsp"%>
+    </c:when>
+    <c:otherwise>
+        <%@include file="fragments/header.jsp"%>
+    </c:otherwise>
+</c:choose>
 <div class="container w-25">
 <form class="padding-small text-center">
     <h1 class="text-color-darker">Kontakt</h1>
