@@ -18,10 +18,7 @@ import java.util.List;
 public class HomeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BookDao bookDao = new BookDao();
-        List<Book> books = bookDao.findAll();
-        System.out.println(books);
 
-        getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
     }
 }
